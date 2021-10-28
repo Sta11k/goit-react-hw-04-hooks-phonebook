@@ -53,7 +53,6 @@ class App extends Component {
   };
 
   deleteContact = contactId => {
-    // console.log(contactId);
     this.setState(({ contactsOll }) => ({
       contactsOll: contactsOll.filter(contact => contact.id !== contactId),
     }));
