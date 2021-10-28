@@ -1,22 +1,22 @@
 import s from './Filter.module.css';
 import PropTypes from 'prop-types';
 
-function Filter({ filterContactsOll, handleFilter }) {
+function Filter({ value, onChange }) {
   return (
     <label className={s.label}>
       Find contacts by name
       <input
         className={s.input}
         type="text"
-        value={filterContactsOll}
-        onChange={handleFilter}
+        value={value}
+        onChange={onChange}
       />
     </label>
   );
 }
 
 Filter.propTypes = {
-  filterContactsOll: PropTypes.string,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 

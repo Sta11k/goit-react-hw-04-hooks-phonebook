@@ -4,39 +4,67 @@ import { useState } from 'react';
 import s from './Form.module.css';
 import { v4 as uuid } from 'uuid';
 
-function Form(OnSubmit) {
+const initialState = {
+  name: '',
+  number: '',
+  association: 'Other',
+};
+
+function Form(contactsOll, hendlerSubmitForm) {
   let contactIdName = uuid();
   let contactIdNumber = uuid();
+  const [contact, setContact] = useState(initialState);
 
-  const [id, setId] = useState('');
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const [association, setAssociation] = useState('Other');
+  // const [id, setId] = useState('');
+  // const [name, setName] = useState('');
+  // const [number, setNumber] = useState('');
+  // const [association, setAssociation] = useState('Other');
 
   const handleChange = e => {
-    const { name, value } = e.currentTarget;
-    switch (name) {
-      // case 'id':
-      //   setId(() => contactIdName);
-      //   break;
-      case 'name':
-        setName(value);
-        break;
-      case 'number':
-        setNumber(value);
-        break;
-      case 'association':
-        setAssociation(value);
-        break;
-      default:
-        break;
-    }
-    // console.log(setId(value));
+    setContact({ ...contact, [e.target.name]: e.target.value });
+
+    // const { name, value } = e.currentTarget;
+    // switch (name) {
+    //   // case 'id':
+    //   //   setId(() => contactIdName);
+    //   //   break;
+    //   case 'name':
+    //     setName(value);
+    //     break;
+    //   case 'number':
+    //     setNumber(value);
+    //     break;
+    //   case 'association':
+    //     setAssociation(value);
+    //     break;
+    //   default:
+    //     break;
   };
+  // console.log(setId(value));
+
   const handleSabmit = e => {
     e.preventDefault();
-    setId(() => contactIdName);
-    console.log(id, name, number, association);
+    console.log('NAME', name);
+    console.log(contactsOll);
+    for (const { name } of contactsOll) {
+      if (name === contact.name) {
+        alert(`${name} is already in contacts`);
+
+        return;
+      }
+    }
+    const newContact = {
+      id: contactIdName,
+      name: contact.name,
+      number: contact.number,
+      association: contact.association,
+    };
+
+    hendlerSubmitForm(newContact);
+
+    setContact({ name: '', number: '', association: 'Other' });
+    // setId(() => contactIdName);
+    // console.log(id, name, number, association);
     //  const { name, number, association } = this.state;
     // this.setState({
     //   // id,
@@ -45,12 +73,12 @@ function Form(OnSubmit) {
     //   association,
     // });
     // this.setState({ contactPhone });
-    OnSubmit(name, number, association);
+    // OnSubmit(name, number, association);
 
-    setId('');
-    setName('');
-    setNumber('');
-    setAssociation('Other');
+    // setId('');
+    // setName('');
+    // setNumber('');
+    // setAssociation('Other');
   };
 
   // const resetForm = () => {
@@ -59,6 +87,8 @@ function Form(OnSubmit) {
   //    setNumber = '';
   //   setAssociation = 'Other';
   // };
+
+  const { name, number, association } = contact;
   return (
     <form onSubmit={handleSabmit} className={s.m}>
       <h2 className={s.title}>Phonebook</h2>
