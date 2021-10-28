@@ -2,12 +2,12 @@ import s from './Todolist.module.css';
 import PropTypes from 'prop-types';
 // import { Form } from '../Forms/Form';
 // import { App } from '../../App';
-// import React, { Component } from 'react';
+import React from 'react';
 
-function Todolist({ contactsOll, onDeleteContact, filterContactsOll }) {
-  console.log('LIST', contactsOll); // const filterContacts = contactsOll.filter({ name })=> name.toLowerCase().includes(filterContactsOll.toLowerCase());
-  const filteredContacts = contactsOll.filter(({ name }) =>
-    name.toLowerCase().includes(filterContactsOll.toLowerCase()),
+const Todolist = ({ contacts, handleDeleteContact, filterTextSearch }) => {
+  console.log('LIST', contacts); // const filterContacts = contactsOll.filter({ name })=> name.toLowerCase().includes(filterContactsOll.toLowerCase());
+  const filteredContacts = contacts.filter(({ name }) =>
+    name.toLowerCase().includes(filterTextSearch.toLowerCase()),
   );
 
   return (
@@ -23,7 +23,7 @@ function Todolist({ contactsOll, onDeleteContact, filterContactsOll }) {
             <button
               className={s.btn}
               type="button"
-              onClick={() => onDeleteContact(id)}
+              onClick={() => handleDeleteContact(id)}
             >
               {' '}
               DELETE contact
@@ -33,11 +33,11 @@ function Todolist({ contactsOll, onDeleteContact, filterContactsOll }) {
       })}
     </ul>
   );
-}
-export default Todolist;
+};
 
 Todolist.propTypes = {
-  filterContactsOll: PropTypes.string.isRequired,
-  contactsOll: PropTypes.array.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
+  filterTextSearch: PropTypes.string.isRequired,
+  contacts: PropTypes.array.isRequired,
+  handleDeleteContact: PropTypes.func.isRequired,
 };
+export default Todolist;
